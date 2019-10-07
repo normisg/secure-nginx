@@ -1,0 +1,9 @@
+services:
+  - docker
+
+install:
+  - docker build -t secure-nginx .
+  - docker run -d -p 127.0.0.1:80:80 --name secure-nginx secure-nginx
+
+script:
+  - docker ps | grep -q secure-nginx

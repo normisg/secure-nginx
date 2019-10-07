@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+  baseline:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+  
+  unsecure:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "8082:80"
+    volumes:
+      - "./config/unsecure/conf.d:/etc/nginx/conf.d"
+
+  secure:
+    build:
+      context: ../
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8083:80"
+    volumes:
+      - "./config/secure/conf.d:/etc/nginx/conf.d"
+      - "./config/secure/security:/etc/nginx/security"
